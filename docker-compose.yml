@@ -1,0 +1,23 @@
+version: '3'
+
+services: #в пределах этого определяем все контейнеры и действия с ними 
+
+ server: #первый контейнер 
+
+  build: server/ #обращается к Dockerfile в папке server и создает контейнер
+
+  command: python ./server.py #выполнение команды - открывает файл с кодом
+
+  ports: 
+   - 1111:1111  #порт компа и порт контейнера, перенаправление
+  
+ client: #второй контейнер
+
+  build: client/
+
+  command: python ./client.py
+
+  network_mode: host  #обращается к localhost
+
+  depends_on: #ожидает запуска сервера
+  - server
